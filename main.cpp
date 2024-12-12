@@ -10,7 +10,7 @@ class MagicType
     void load_magic();
 
 public:
-    explicit MagicType(int opcao = MAGIC_MIME);
+    explicit MagicType(int opcao = MAGIC_MIME_TYPE);
     void inicializa();
     std::string get_type(const std::filesystem::path &path);
 
@@ -41,6 +41,7 @@ void MagicType::load_magic()
 
 MagicType::~MagicType()
 {
+    fmt::print("{}\n", magic_error(magic));
     if (magic != nullptr)
         magic_close(magic);
 }
@@ -61,6 +62,7 @@ int main(int argc, const char **argv)
     try
     {
         magic.inicializa();
+        std::cout << magic.get_type(argv[1]) << std::endl;
     }
     catch (const std::exception &e)
     {
