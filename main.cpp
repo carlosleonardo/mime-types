@@ -68,4 +68,5 @@ int main(int argc, const char **argv)
     {
         std::cerr << e.what() << '\n';
     }
+    return 0;
 }
