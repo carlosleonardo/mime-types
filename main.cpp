@@ -1,5 +1,6 @@
 #include <iostream>
 #include <filesystem>
+#include <string>
 #include <magic.h>
 #include <fmt/format.h>
 
@@ -41,14 +42,14 @@ void MagicType::load_magic()
 
 MagicType::~MagicType()
 {
-    fmt::print("{}\n", magic_error(magic));
+    fmt::print("{}\n", "Destrutor chamado");
     if (magic != nullptr)
         magic_close(magic);
 }
 
 std::string MagicType::get_type(const std::filesystem::path &path)
 {
-    return magic_file(magic, path.c_str());
+    return magic_file(magic, path.string().c_str());
 }
 
 int main(int argc, const char **argv)
@@ -67,6 +68,10 @@ int main(int argc, const char **argv)
     catch (const std::exception &e)
     {
         std::cerr << e.what() << '\n';
+    }
+    catch (...)
+    {
+        std::cerr << "Erro desconhecido" << std::endl;
     }
     return 0;
 }
