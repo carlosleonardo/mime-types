@@ -8,12 +8,12 @@ class MagicType
 {
     magic_t magic;
     int opcao;
-    void load_magic();
+    void load_magic() const;
 
 public:
     explicit MagicType(int opcao = MAGIC_MIME_TYPE);
     void inicializa();
-    std::string get_type(const std::filesystem::path &path);
+    std::string get_type(const std::filesystem::path &path) const;
 
     ~MagicType();
 };
@@ -32,8 +32,7 @@ void MagicType::inicializa()
     load_magic();
 }
 
-void MagicType::load_magic()
-{
+void MagicType::load_magic() const {
     if (magic_load(magic, nullptr) != 0)
     {
         throw std::runtime_error("Erro ao carregar o magic");
@@ -47,8 +46,7 @@ MagicType::~MagicType()
         magic_close(magic);
 }
 
-std::string MagicType::get_type(const std::filesystem::path &path)
-{
+std::string MagicType::get_type(const std::filesystem::path &path) const {
     return magic_file(magic, path.string().c_str());
 }
 
